@@ -1,8 +1,14 @@
+dist: trusty
+
 language: node_js
 
 node_js:
-  - node
+  - 10
   - 9
+
+services:
+  - redis-server
+  - postgresql
 
 addons:
   postgresql: "10"
@@ -12,14 +18,14 @@ addons:
       - postgresql-10
       - postgresql-client-10
 
-services:
-  - redis-server
-  - postgresql
-
 env:
   ARK_CI_TEST: true
   global:
-  - PGPORT=5433
+    - PGPORT=5432
+    - PGDATABASE=ark_testnet
+    - PGUSER=ark
+    - PGPASSWORD='password'
+    - PGHOST=localhost
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
@@ -37,8 +43,8 @@ before_script:
   - 'if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0; fi'
   - 'if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start; sleep 3; fi'
   - sudo redis-server /etc/redis/redis.conf --port 6379
-  - psql -c "create user ark with password 'password';" -U postgres -p 5433
-  - psql -c "create database ark_testnet with owner 'ark';" -U postgres -p 5433
+  # - psql -c "create user ark with password 'password';" -U postgres -p 5433
+  # - psql -c "create database ark_testnet with owner 'ark';" -U postgres -p 5433
 
 script:
   # See https://jestjs.io/docs/en/troubleshooting.html#tests-are-extremely-slow-on-docker-and-or-continuous-integration-ci-server
