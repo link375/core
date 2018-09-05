@@ -20,17 +20,16 @@ addons:
 
 env:
   ARK_CI_TEST: true
+  ARK_DB_PORT: 5433
   global:
-    - PGPORT=5432
-    - PGDATABASE=ark_testnet
-    - PGUSER=ark
-    - PGPASSWORD='password'
-    - PGHOST=localhost
+    - PGPORT=5433
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH="$HOME/.yarn/bin:$PATH"
   - yarn config set cache-folder $HOME/.cache/yarn
+  - sudo sed -i -e '/local.*peer/s/postgres/all/' -e 's/peer\|md5/trust/g' /etc/postgresql/*/main/pg_hba.conf
+  - sudo service postgresql restart
 
 install: yarn
 
