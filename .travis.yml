@@ -3,7 +3,7 @@ dist: trusty
 language: node_js
 
 node_js:
-  - 10
+  # - 10
   - 9
 
 services:
@@ -21,13 +21,13 @@ addons:
 env:
   ARK_CI_TEST: true
   # ARK_DB_HOST: 'localhost'
-  # ARK_DB_PORT: 5433
+  ARK_DB_PORT: 5433
   # ARK_DB_DATABASE: 'ark_testnet'
   # ARK_DB_USERNAME: 'postgres'
   # ARK_DB_PASSWORD: ''
-  # global:
+  global:
   #   - PGHOST=localhost
-  #   - PGPORT=5433
+    - PGPORT=5433
   #   - PGDATABASE=ark_testnet
   #   - PGUSER=postgres
   #   - PGPASSWORD=''
