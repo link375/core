@@ -20,14 +20,14 @@ addons:
 
 env:
   ARK_CI_TEST: true
-  # ARK_DB_HOST: 'localhost'
   ARK_DB_PORT: 5433
+  # ARK_DB_HOST: 'localhost'
   # ARK_DB_DATABASE: 'ark_testnet'
   # ARK_DB_USERNAME: 'postgres'
   # ARK_DB_PASSWORD: ''
   global:
-  #   - PGHOST=localhost
     - PGPORT=5433
+  #   - PGHOST=localhost
   #   - PGDATABASE=ark_testnet
   #   - PGUSER=postgres
   #   - PGPASSWORD=''
