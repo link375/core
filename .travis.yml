@@ -15,22 +15,9 @@ addons:
   apt:
     packages:
       - xsel
-#      - postgresql-10
-#      - postgresql-client-10
 
 env:
   ARK_CI_TEST: true
-  ARK_DB_PORT: 5432
-  # ARK_DB_HOST: 'localhost'
-  # ARK_DB_DATABASE: 'ark_testnet'
-  # ARK_DB_USERNAME: 'postgres'
-  # ARK_DB_PASSWORD: ''
-  #global:
-  #  - PGPORT=5433
-  #   - PGHOST=localhost
-  #   - PGDATABASE=ark_testnet
-  #   - PGUSER=postgres
-  #   - PGPASSWORD=''
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
@@ -52,6 +39,8 @@ stages:
   - test
 
 before_script:
+  - psql --version
+  - psql -c 'SELECT version();' -U postgres
   - 'if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0; fi'
   - 'if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start; sleep 3; fi'
   - sudo redis-server /etc/redis/redis.conf --port 6379
